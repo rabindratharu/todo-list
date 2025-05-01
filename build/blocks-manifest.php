@@ -28,6 +28,14 @@ return array(
 			'fontSizeMobile' => array(
 				'type' => 'number',
 				'default' => 16
+			),
+			'margin' => array(
+				'type' => 'object',
+				'default' => array(
+					'desktop' => 25,
+					'tablet' => 20,
+					'mobile' => 10
+				)
 			)
 		),
 		'textdomain' => 'todo-list',

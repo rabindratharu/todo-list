@@ -6,6 +6,8 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, TabPanel } from '@wordpress/components';
 
+import ResponsiveRangeControl from './responsive-range-control';
+
 import './editor.scss';
 
 export default function Edit(props) {
@@ -13,7 +15,8 @@ export default function Edit(props) {
 	const {
 		fontSizeDesktop,
 		fontSizeTablet,
-		fontSizeMobile
+		fontSizeMobile,
+		margin,
 	} = attributes;
 
 	// Get current device type from the editor
@@ -90,6 +93,15 @@ export default function Edit(props) {
 							/>
 						)}
 					</TabPanel>
+					<ResponsiveRangeControl
+						label={__('Margin')}
+						value={margin}
+						onChange={(newMargin) => setAttributes({ margin: newMargin })}
+						min={0}
+						max={100}
+						step={1}
+						resizeViewport={true}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<p {...useBlockProps({

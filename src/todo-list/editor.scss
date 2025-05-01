@@ -7,3 +7,64 @@
 .wp-block-create-block-todo-list {
 	border: 1px dotted #f00;
 }
+
+/* Main control container */
+.responsive-range-control {
+	margin-bottom: 1.5em;
+	position: relative;
+}
+
+/* Header containing label and device tabs */
+.responsive-range-control__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+/* Device tabs container */
+.responsive-range-control__tabs .components-tab-panel__tabs {
+	display: flex;
+	gap: 4px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	padding: 2px;
+	margin: 0;
+}
+
+/* Device tab buttons */
+.responsive-range-control__tabs .components-button {
+	height: 30px;
+	width: 30px;
+	padding: 0;
+	min-width: auto;
+	border: none;
+	box-shadow: none;
+	border-radius: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Active device tab */
+.responsive-range-control__tabs .components-button.is-active {
+	background: #ddd;
+}
+
+/* Device icons */
+.responsive-range-control__tabs .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+/* Range control adjustments */
+.responsive-range-control .components-range-control {
+	margin-bottom: 0;
+}
+
+/* Input field styling */
+.responsive-range-control .components-range-control__number {
+	max-width: 80px;
+}

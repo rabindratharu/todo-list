@@ -23,6 +23,14 @@
     "fontSizeMobile": {
       "type": "number",
       "default": 16
+    },
+    "margin": {
+      "type": "object",
+      "default": {
+        "desktop": 25,
+        "tablet": 20,
+        "mobile": 10
+      }
     }
   },
   "textdomain": "todo-list",

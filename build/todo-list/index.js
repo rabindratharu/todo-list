@@ -8,7 +8,7 @@
   \**********************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/todo-list","version":"0.1.0","title":"Todo List","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false},"attributes":{"fontSizeDesktop":{"type":"number","default":16},"fontSizeTablet":{"type":"number","default":16},"fontSizeMobile":{"type":"number","default":16}},"textdomain":"todo-list","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/todo-list","version":"0.1.0","title":"Todo List","category":"widgets","icon":"smiley","description":"Example block scaffolded with Create Block tool.","example":{},"supports":{"html":false},"attributes":{"fontSizeDesktop":{"type":"number","default":16},"fontSizeTablet":{"type":"number","default":16},"fontSizeMobile":{"type":"number","default":16},"margin":{"type":"object","default":{"desktop":25,"tablet":20,"mobile":10}}},"textdomain":"todo-list","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ }),
 
@@ -30,12 +30,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./editor.scss */ "./src/todo-list/editor.scss");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _responsive_range_control__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./responsive-range-control */ "./src/todo-list/responsive-range-control.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./editor.scss */ "./src/todo-list/editor.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -50,7 +52,8 @@ function Edit(props) {
   const {
     fontSizeDesktop,
     fontSizeTablet,
-    fontSizeMobile
+    fontSizeMobile,
+    margin
   } = attributes;
 
   // Get current device type from the editor
@@ -93,11 +96,11 @@ function Edit(props) {
   const getActiveTab = () => {
     return deviceType === 'Tablet' ? 'Tablet' : deviceType === 'Mobile' ? 'Mobile' : 'Desktop';
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Font Size Settings', 'my-gutenberg'),
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TabPanel, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TabPanel, {
           className: "device-tabs",
           activeClass: "active-tab",
           initialTabName: getActiveTab(),
@@ -117,7 +120,7 @@ function Edit(props) {
           onSelect: tabName => {
             __experimentalSetPreviewDeviceType(tabName);
           },
-          children: tab => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
+          children: tab => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)(`${tab.title} Font Size`, 'my-gutenberg'),
             value: fontSizeByDevice[tab.name],
             onChange: value => updateFontSize(value, tab.name),
@@ -125,9 +128,19 @@ function Edit(props) {
             max: 100,
             step: 1
           })
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_responsive_range_control__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Margin'),
+          value: margin,
+          onChange: newMargin => setAttributes({
+            margin: newMargin
+          }),
+          min: 0,
+          max: 100,
+          step: 1,
+          resizeViewport: true
+        })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
         style: {
           fontSize: fontSizeByDevice[deviceType] ? `${fontSizeByDevice[deviceType]}px` : undefined
@@ -203,6 +216,221 @@ __webpack_require__.r(__webpack_exports__);
    */
   save: _save__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
+
+/***/ }),
+
+/***/ "./src/todo-list/responsive-range-control.js":
+/*!***************************************************!*\
+  !*** ./src/todo-list/responsive-range-control.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+
+const {
+  __
+} = wp.i18n;
+const {
+  RangeControl,
+  TabPanel
+} = wp.components;
+const {
+  useState,
+  useEffect
+} = wp.element;
+const {
+  useSelect,
+  useDispatch
+} = wp.data;
+const ResponsiveRangeControl = props => {
+  const {
+    label,
+    value,
+    onChange,
+    min = 0,
+    max = 100,
+    step = 1,
+    showDeviceControls = true,
+    resizeViewport = true
+  } = props;
+
+  // Get current device type from the editor
+  const {
+    deviceType
+  } = useSelect(select => {
+    const {
+      __experimentalGetPreviewDeviceType
+    } = select('core/edit-post');
+    return {
+      deviceType: (__experimentalGetPreviewDeviceType() || 'Desktop').toLowerCase()
+    };
+  }, []);
+  const isResponsive = typeof value === 'object' && value !== null;
+  const [values, setValues] = useState(isResponsive ? value : {
+    desktop: value,
+    tablet: value,
+    mobile: value
+  });
+  useEffect(() => {
+    if (isResponsive) {
+      setValues(value);
+    } else {
+      setValues({
+        desktop: value,
+        tablet: value,
+        mobile: value
+      });
+    }
+  }, [value, isResponsive]);
+  const handleChange = newValue => {
+    const newValues = {
+      ...values,
+      [deviceType]: newValue
+    };
+    setValues(newValues);
+    if (isResponsive) {
+      onChange(newValues);
+    } else {
+      onChange(newValue);
+    }
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+    className: "responsive-range-control",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      className: "responsive-range-control__header",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
+        className: "components-base-control__label",
+        children: label
+      }), showDeviceControls && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(DevicePreviewTabs, {
+        currentDevice: deviceType,
+        resizeViewport: resizeViewport
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(RangeControl, {
+      value: values[deviceType],
+      onChange: handleChange,
+      min: min,
+      max: max,
+      step: step,
+      withInputField: true
+    })]
+  });
+};
+const DevicePreviewTabs = ({
+  currentDevice,
+  resizeViewport = true
+}) => {
+  const {
+    __experimentalSetPreviewDeviceType
+  } = useDispatch('core/edit-post');
+  const handleDeviceChange = device => {
+    if (resizeViewport && __experimentalSetPreviewDeviceType) {
+      try {
+        // Convert to capitalized device name (Desktop, Tablet, Mobile)
+        const deviceName = device.charAt(0).toUpperCase() + device.slice(1);
+        __experimentalSetPreviewDeviceType(deviceName);
+      } catch (error) {
+        console.warn('Error setting preview device type:', error);
+      }
+    }
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(TabPanel, {
+    className: "responsive-range-control__tabs",
+    activeClass: "is-active",
+    initialTabName: currentDevice,
+    onSelect: handleDeviceChange,
+    tabs: [{
+      name: 'desktop',
+      title: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+        type: "button",
+        className: "components-button editor-post-preview__dropdown-toggle",
+        "aria-label": __('Desktop'),
+        title: __('Desktop'),
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+          className: "dashicons dashicons-desktop"
+        })
+      })
+    }, {
+      name: 'tablet',
+      title: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+        type: "button",
+        className: "components-button editor-post-preview__dropdown-toggle",
+        "aria-label": __('Tablet'),
+        title: __('Tablet'),
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+          className: "dashicons dashicons-tablet"
+        })
+      })
+    }, {
+      name: 'mobile',
+      title: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+        type: "button",
+        className: "components-button editor-post-preview__dropdown-toggle",
+        "aria-label": __('Mobile'),
+        title: __('Mobile'),
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+          className: "dashicons dashicons-smartphone"
+        })
+      })
+    }],
+    children: () => null
+  });
+};
+
+// Add CSS styles
+const styles = `
+    .responsive-range-control {
+        margin-bottom: 1.5em;
+    }
+    
+    .responsive-range-control__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    
+    .responsive-range-control__tabs .components-tab-panel__tabs {
+        display: flex;
+        gap: 4px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        padding: 2px;
+    }
+    
+    .responsive-range-control__tabs .components-button {
+        height: 30px;
+        width: 30px;
+        padding: 0;
+        min-width: auto;
+        border: none;
+        box-shadow: none;
+        border-radius: 2px;
+    }
+    
+    .responsive-range-control__tabs .components-button.is-active {
+        background: #ddd;
+    }
+    
+    .responsive-range-control__tabs .dashicons {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+    }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.innerHTML = styles;
+  document.head.appendChild(styleElement);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ResponsiveRangeControl);
 
 /***/ }),
 
