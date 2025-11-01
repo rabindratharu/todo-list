@@ -1,0 +1,13 @@
+// Styles to be added.
+.class-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/banner-1544x500.png');
+}
+// In editor.scss
+.example {
+    margin-left: 20px;
+    padding-right: 10px;
+    float: left;
+}

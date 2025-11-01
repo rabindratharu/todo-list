@@ -1,0 +1,66 @@
+{
+	"name": "imransayed/aquila-features",
+	"description": "Aquila Features WordPress Plugin",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"version": "1.0.0",
+	"keywords": [
+		"wordpress",
+		"plugin",
+		"aquila",
+		"features"
+	],
+	"require": {
+		"php": ">=7.4",
+		"ext-json": "*"
+	},
+	"require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "squizlabs/php_codesniffer": "^3.7",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"optimize-autoloader": true,
+		"sort-packages": true,
+		"platform-check": false
+	},
+	"authors": [
+		{
+			"name": "Imran Sayed",
+			"email": "codeytek.academy@gmail.com",
+			"homepage": "https://github.com/imranhsayed",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"AquilaFeatures\\": "src/"
+		},
+		"files": [
+			"inc/custom-functions.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"AquilaFeatures\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"phpcs": "phpcs",
+		"phpcbf": "phpcbf",
+		"check-cs": "phpcs --standard=phpcs.xml.dist",
+		"fix-cs": "phpcbf --standard=phpcs.xml.dist",
+		"test": "echo 'No tests configured yet'"
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true,
+	"support": {
+		"issues": "https://github.com/imranhsayed/aquila-features/issues",
+		"source": "https://github.com/imranhsayed/aquila-features",
+		"docs": "https://github.com/imranhsayed/aquila-features#readme"
+	}
+}
