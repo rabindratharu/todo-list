@@ -22,33 +22,35 @@ const entry = {
   main: path.join(JS_DIR, "main.js"),
 };
 
+const output = {
+  path: BUILD_DIR,
+  filename: 'js/[name].js',
+};
+
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-  
+
   return {
     ...defaultConfig,
     entry,
-    output: {
-      path: BUILD_DIR,
-      filename: "js/[name].js",
-    },
+    output,
     module: {
       ...defaultConfig.module,
       rules: [
         // Keep all default rules except the ones we explicitly want to override
         ...defaultConfig.module.rules.map(rule => {
           const test = rule.test?.toString() || '';
-          
+
           // Replace the default image and font rules with our custom ones
-          if (test.includes('png') || test.includes('jpg') || test.includes('jpeg') || 
-              test.includes('gif') || test.includes('svg') || test.includes('ico') ||
-              test.includes('woff') || test.includes('ttf') || test.includes('eot')) {
+          if (test.includes('png') || test.includes('jpg') || test.includes('jpeg') ||
+            test.includes('gif') || test.includes('svg') || test.includes('ico') ||
+            test.includes('woff') || test.includes('ttf') || test.includes('eot')) {
             return null; // Remove this rule, we'll add our custom ones below
           }
-          
+
           return rule;
         }).filter(Boolean), // Remove null entries
-        
+
         // Custom image rule - no content hash
         {
           test: /\.(png|jpg|jpeg|gif|svg|ico)$/i,
@@ -72,7 +74,7 @@ module.exports = (env, argv) => {
       ...defaultConfig.plugins.filter((plugin) => {
         const pluginName = plugin.constructor.name;
         return (
-          pluginName !== "MiniCssExtractPlugin" && 
+          pluginName !== "MiniCssExtractPlugin" &&
           pluginName !== "RtlCssPlugin"
         );
       }),
@@ -122,8 +124,8 @@ module.exports = (env, argv) => {
       minimize: isProduction, // Only minimize in production mode
       minimizer: [
         // Use terser for JS (keep default)
-        ...defaultConfig.optimization.minimizer.filter(plugin => 
-          plugin.constructor.name !== 'CssMinimizerPlugin' && 
+        ...defaultConfig.optimization.minimizer.filter(plugin =>
+          plugin.constructor.name !== 'CssMinimizerPlugin' &&
           plugin.constructor.name !== 'TerserPlugin'
         ),
         // Custom Terser configuration for JS
@@ -153,5 +155,8 @@ module.exports = (env, argv) => {
         ] : []),
       ],
     },
+    performance: {
+      maxAssetSize: 512000
+    }
   };
 };

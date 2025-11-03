@@ -1,5 +1,5 @@
 {
-	"name": "imransayed/aquila-features",
+	"name": "imransayed/todo-list",
 	"description": "Aquila Features WordPress Plugin",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
@@ -36,14 +36,6 @@
 			"role": "Developer"
 		}
 	],
-	"autoload": {
-		"psr-4": {
-			"AquilaFeatures\\": "src/"
-		},
-		"files": [
-			"inc/custom-functions.php"
-		]
-	},
 	"autoload-dev": {
 		"psr-4": {
 			"AquilaFeatures\\Tests\\": "tests/"
@@ -59,8 +51,8 @@
 	"minimum-stability": "stable",
 	"prefer-stable": true,
 	"support": {
-		"issues": "https://github.com/imranhsayed/aquila-features/issues",
-		"source": "https://github.com/imranhsayed/aquila-features",
-		"docs": "https://github.com/imranhsayed/aquila-features#readme"
+		"issues": "https://github.com/imranhsayed/todo-list/issues",
+		"source": "https://github.com/imranhsayed/todo-list",
+		"docs": "https://github.com/imranhsayed/todo-list#readme"
 	}
 }

@@ -1,0 +1,141 @@
+# Copyright (C) 2025 elementifywp
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Todo List 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/todo-list\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-11-03T02:20:45+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+
+#. Plugin Name of the plugin
+#: todo-list.php
+msgid "Todo List"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: todo-list.php
+msgid "https://elementifywp.com/elementify-addons"
+msgstr ""
+
+#. Description of the plugin
+#: todo-list.php
+msgid "<a href=\"https://elementifywp.com/\">Todo List</a> is a powerful and lightweight extension designed to supercharge your Elementor Page Builder. Packed with a collection of creative and fully customizable widgets, it helps you build faster and design smarter—just like a pro. Whether you're crafting landing pages, blogs, or business websites, Elementify Addons makes it easy to create stunning layouts with minimal effort and maximum flexibility."
+msgstr ""
+
+#. Author of the plugin
+#: todo-list.php
+msgid "elementifywp"
+msgstr ""
+
+#. Author URI of the plugin
+#: todo-list.php
+msgid "https://elementifywp.com/"
+msgstr ""
+
+#: inc/classes/class-plugin.php:116
+msgid "Cloning is forbidden."
+msgstr ""
+
+#: inc/classes/class-plugin.php:129
+msgid "Unserializing instances of this class is forbidden."
+msgstr ""
+
+#: inc/classes/class-utils.php:58
+msgid "(no title)"
+msgstr ""
+
+#: assets/build/js/editor.js:256
+#: assets/src/js/editor.js:71
+#: assets/build/js/editor.js:153
+msgid "Resuming previous scan..."
+msgstr ""
+
+#: assets/build/js/editor.js:281
+#: assets/build/js/editor.js:284
+#: assets/src/js/editor.js:98
+#: assets/src/js/editor.js:101
+#: assets/build/js/editor.js:180
+#: assets/build/js/editor.js:183
+msgid "Starting scan..."
+msgstr ""
+
+#: assets/build/js/editor.js:301
+#: assets/build/js/editor.js:306
+#: assets/src/js/editor.js:121
+#: assets/src/js/editor.js:127
+#: assets/build/js/editor.js:203
+#: assets/build/js/editor.js:209
+msgid "Scan in progress..."
+msgstr ""
+
+#: assets/build/js/editor.js:309
+#: assets/src/js/editor.js:134
+#: assets/build/js/editor.js:216
+msgid "Scan failed to start"
+msgstr ""
+
+#: assets/build/js/editor.js:314
+#: assets/src/js/editor.js:141
+#: assets/build/js/editor.js:223
+msgid "Error starting scan: "
+msgstr ""
+
+#: assets/build/js/editor.js:340
+#: assets/src/js/editor.js:174
+#: assets/build/js/editor.js:256
+msgid "Scan completed successfully!"
+msgstr ""
+
+#: assets/build/js/editor.js:351
+#: assets/src/js/editor.js:191
+#: assets/build/js/editor.js:273
+msgid "Error checking scan progress:"
+msgstr ""
+
+#: assets/build/js/editor.js:379
+#: assets/src/js/editor.js:227
+#: assets/build/js/editor.js:309
+msgid "Scan stopped by user"
+msgstr ""
+
+#: assets/build/js/editor.js:391
+#: assets/src/js/editor.js:240
+#: assets/build/js/editor.js:322
+msgid "Posts Maintenance"
+msgstr ""
+
+#: assets/build/js/editor.js:399
+#: assets/src/js/editor.js:246
+#: assets/build/js/editor.js:328
+msgid "Select Post Types:"
+msgstr ""
+
+#: assets/build/js/editor.js:415
+#: assets/src/js/editor.js:266
+#: assets/build/js/editor.js:348
+msgid "Hold Ctrl/Cmd to select multiple post types"
+msgstr ""
+
+#: assets/build/js/editor.js:448
+#: assets/src/js/editor.js:302
+#: assets/build/js/editor.js:384
+msgid "Processed:"
+msgstr ""
+
+#: assets/build/js/editor.js:467
+#: assets/src/js/editor.js:329
+#: assets/build/js/editor.js:411
+msgid "Scan Posts"
+msgstr ""
+
+#: assets/build/js/editor.js:471
+#: assets/src/js/editor.js:336
+#: assets/build/js/editor.js:418
+msgid "Stop Scan"
+msgstr ""

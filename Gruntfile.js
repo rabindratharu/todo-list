@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 		"src/**",
         "templates/**",
 		"languages/**",
-		"aquila-features.php",
+		"todo-list.php",
 		"vendor/**",
 		"!**/*.map",
 	];
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
 		checktextdomain: {
 			options: {
-				text_domain: "aquila-features",
+				text_domain: "todo-list",
 				keywords: [
 					"__:1,2d",
 					"_e:1,2d",
