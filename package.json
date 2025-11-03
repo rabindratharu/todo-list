@@ -1,8 +1,15 @@
 {
 	"name": "todo-list",
-	"version": "1.0.1",
-	"description": "Aquila features plugin packages",
-	"main": "main.js",
+	"version": "1.0.0",
+	"description": "Elementify Addons is a next-gen Elementor plugin that empowers anyone to build stunning, professional websites—faster, easier, and with zero coding.",
+	"author": "ElementifyWP",
+	"license": "GPL-3.0-or-later",
+	"main": "Gruntfile.js",
+	"keywords": [
+		"wordpress",
+		"plugin"
+	],
+	"private": true,
 	"scripts": {
 		"composer-start": "shx rm -rf vendor/ composer.lock && composer clear-cache && composer install",
 		"composer-build": "shx rm -rf vendor/ composer.lock && composer clear-cache && composer install --no-dev --prefer-dist --optimize-autoloader",
@@ -22,14 +29,6 @@
 		"translate": "wp i18n make-pot ./ languages/todo-list.pot --exclude=builds/,node_modules/,cypress/,vendor --ignore-domain --allow-root",
 		"release": "npm run build && npm run translate && grunt build"
 	},
-	"keywords": [
-		"wordpress",
-		"plugin",
-		"aquila"
-	],
-	"author": "Imran Sayed",
-	"license": "MIT",
-	"private": true,
 	"devDependencies": {
 		"@svgr/cli": "^8.1.0",
 		"@wordpress/stylelint-config": "^23.25.0",

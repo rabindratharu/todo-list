@@ -2,98 +2,135 @@ module.exports = function (grunt) {
 	require("load-grunt-tasks")(grunt);
 
 	const copyFiles = [
-		"assets/**",
-		"inc/**",
-		"src/**",
-        "templates/**",
-		"languages/**",
-		"todo-list.php",
-		"vendor/**",
-		"!**/*.map",
+		'assets/**',            // include everything in assets
+		'!assets/src/**',  		// exclude everything in assets/src
+		'inc/**',
+		'languages/**',
+		'uninstall.php',
+		'todo-list.php',
+		'LICENSE.txt',
+		'readme.txt',
+		'index.php',
+		'!**/*.map',       // Exclude source maps
+		'!**/.DS_Store',   // Exclude macOS metadata
+		'!**/*.tmp',       // Exclude temporary files
 	];
+	
+	const excludeCopyFilesPro = copyFiles.slice(0).concat(['!changelog.txt']);
 
-	const excludeCopyFilesPro = copyFiles.slice(0).concat(["changelog.txt"]);
-
+	// Project configuration
 	grunt.initConfig({
-		pkg: grunt.file.readJSON("package.json"),
+		pkg: grunt.file.readJSON('package.json'),
 
-		// Clean temp folders and release copies.
+		// Clean task to remove temporary files and previous builds
 		clean: {
 			temp: {
-				src: ["**/*.tmp", "**/.afpDeleted*", "**/.DS_Store"],
+				src: ['**/*.tmp', '**/.afpDeleted*', '**/.DS_Store'],
 				dot: true,
-				filter: "isFile",
+				filter: 'isFile',
 			},
-			assets: ["assets/build/**"],
-			folder_v2: ["build/**"],
+			// Clean all build directories in assets folder and subfolders
+			assets: {
+				src: [
+					'build/**',      // All build directories in assets
+				]
+			},
+			folder_v2: ['build/**'],
 		},
 
+		// Check text domain for WordPress i18n
 		checktextdomain: {
 			options: {
-				text_domain: "todo-list",
+				text_domain: 'todo-list',
 				keywords: [
-					"__:1,2d",
-					"_e:1,2d",
-					"_x:1,2c,3d",
-					"esc_html__:1,2d",
-					"esc_html_e:1,2d",
-					"esc_html_x:1,2c,3d",
-					"esc_attr__:1,2d",
-					"esc_attr_e:1,2d",
-					"esc_attr_x:1,2c,3d",
-					"_ex:1,2c,3d",
-					"_n:1,2,4d",
-					"_nx:1,2,4c,5d",
-					"_n_noop:1,2,3d",
-					"_nx_noop:1,2,3c,4d",
+					'__:1,2d',
+					'_e:1,2d',
+					'_x:1,2c,3d',
+					'esc_html__:1,2d',
+					'esc_html_e:1,2d',
+					'esc_html_x:1,2c,3d',
+					'esc_attr__:1,2d',
+					'esc_attr_e:1,2d',
+					'esc_attr_x:1,2c,3d',
+					'_ex:1,2c,3d',
+					'_n:1,2,4d',
+					'_nx:1,2,4c,5d',
+					'_n_noop:1,2,3d',
+					'_nx_noop:1,2,3c,4d',
 				],
 			},
 			files: {
 				src: [
-					"inc/*.php",
-					"src/*.php",
-                    "templates/**/*.php",
+					'inc/**/*.php',
+					'!core/external/**', // Exclude external libs
 				],
 				expand: true,
 			},
 		},
 
+		// Copy task for pro version
 		copy: {
 			pro: {
-				src: excludeCopyFilesPro,
-				dest: "build/<%= pkg.name %>/",
+				files: [{
+					expand: true,
+					src: excludeCopyFilesPro,
+					dest: 'build/<%= pkg.name %>/',
+				}],
 			},
 		},
 
+		// Compress task to create ZIP
 		compress: {
 			pro: {
 				options: {
-					mode: "zip",
-					archive: "./build/<%= pkg.name %>-<%= pkg.version %>.zip",
+					mode: 'zip',
+					archive: './build/<%= pkg.name %>-<%= pkg.version %>.zip',
 				},
 				expand: true,
-				cwd: "build/<%= pkg.name %>/",
-				src: ["**/*"],
-				dest: "<%= pkg.name %>/",
+				cwd: 'build/<%= pkg.name %>/',
+				src: ['**/*'],
+				dest: '<%= pkg.name %>/',
+			},
+		},
+
+		// Search task configuration (if needed)
+		search: {
+			version: {
+				files: {
+					src: ['*.php', 'inc/**/*.php'],
+				},
+				options: {
+					searchString: /Version:\s*(\d+\.\d+\.\d+)/,
+					logFormat: 'console',
+				},
 			},
 		},
 	});
 
-	// Remove the grunt-search related tasks since the package doesn't exist
-	grunt.registerTask("finish", function () {
-		const json = grunt.file.readJSON("package.json");
-		const file = "./build/" + json.name + "-" + json.version + ".zip";
-		grunt.log.writeln("Process finished.");
-		//log file
-		grunt.log.writeln("File: " + file);
-		grunt.log.writeln("----------");
+	// Register tasks
+	grunt.registerTask('version-compare', ['search:version']);
+	grunt.registerTask('finish', function () {
+		const json = grunt.file.readJSON('package.json');
+		const file = `./build/${json.name}-${json.version}.zip`;
+		grunt.log.writeln(`Process finished. ZIP created: ${file}`);
+		grunt.log.writeln('----------');
 	});
 
-	grunt.registerTask("build", ["checktextdomain", "copy:pro", "compress:pro"]);
-
-	grunt.registerTask("preBuildClean", [
-		"clean:temp",
-		"clean:assets",
-		"clean:folder_v2",
+	// Build task
+	grunt.registerTask('build', [
+		'checktextdomain',
+		'copy:pro',
+		'compress:pro',
+		'finish',
 	]);
+
+	// Pre-build clean task
+	grunt.registerTask('preBuildClean', [
+		'clean:temp',
+		'clean:assets',
+		'clean:folder_v2',
+	]);
+
+	// release task
+	grunt.registerTask('release', ['preBuildClean', 'build']);
 };
