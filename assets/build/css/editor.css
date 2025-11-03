@@ -1,1 +1,23 @@
-.class-name{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;background-image:url(../images/banner-1544x500.png)}.example{float:left;margin-left:20px;padding-right:10px}
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/@wordpress/scripts/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./assets/src/sass/editor.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+.class-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-image: url(../images/banner-1544x500.png);
+}
+
+.example {
+  margin-left: 20px;
+  padding-right: 10px;
+  float: left;
+}
+
+/*# sourceMappingURL=editor.css.map*/
