@@ -13,8 +13,8 @@
 	"scripts": {
 		"composer-start": "shx rm -rf vendor/ composer.lock && composer clear-cache && composer install",
 		"composer-build": "shx rm -rf vendor/ composer.lock && composer clear-cache && composer install --no-dev --prefer-dist --optimize-autoloader",
-		"build": "wp-scripts build --mode=production",
-		"start": "wp-scripts start --mode=development",
+		"build": "npm run clean && wp-scripts build --mode=production",
+		"start": "npm run clean && wp-scripts start --mode=development",
 		"clean": "shx rm -rf assets/build/*",
 		"lint:js": "wp-scripts lint-js assets/src/js",
 		"lint:js:fix": "wp-scripts lint-js assets/src/js --fix",

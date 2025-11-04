@@ -1,86 +1,99 @@
-// editor.js - Option 1: Use relative path
-import '../images/screenshot-1.png';
-import '../images/banner-icon-128x128.png'; // Changed from @images
 import '../sass/editor.scss';
 
-(function ($) {
-	'use strict';
-
-	const initTabs = ($scope, $jQuery) => {
-		const widgetId = $scope.data('id');
-		const widgetClass = `elementor-element-${widgetId}`;
-		const $container = $jQuery(`.${widgetClass} .eae-tabs`);
-
-		if (!$container.length) {
-			return; // Exit if no matching elements are found
+/**
+ * Initialize Elementor Portfolio widget.
+ *
+ * @return {Function|undefined} A cleanup function that removes event listeners
+ *                            and destroys isotope instance, or undefined if
+ *                            initialization fails.
+ */
+function startElemenfolio() {
+	try {
+		const iframe = jQuery('#elementor-preview-iframe');
+		if (!iframe.length) {
+			return;
 		}
 
-		$container.each((idx, element) => {
-			const $element = $jQuery(element);
+		const iframeContents = iframe.contents();
+		const portfolioItems = iframeContents.find(
+			'.eae-portfolio[data-layout="masonry"] .eae-portfolio__content'
+		);
+		if (!portfolioItems.length) {
+			return;
+		}
 
-			// Initialize tabs functionality
-			try {
-				const tabElements = $element.find('.eae-tab').get();
-
-				function tabify(tab) {
-					const $tab = $jQuery(tab);
-					const $tabList = $tab.find('.eae-tab__list').first();
-
-					if ($tabList.length) {
-						const $tabItems = $tabList.children();
-						const $tabContent = $tab
-							.find('.eae-tab__content')
-							.first();
-						const $tabContentItems = $tabContent.children();
-
-						// Find active tab or default to first
-						let activeTabIndex = $tabItems
-							.filter('.is--active')
-							.index();
-						if (activeTabIndex === -1) {
-							activeTabIndex = 0;
-						}
-
-						function setTab(tabIndex) {
-							// Validate index
-							if (tabIndex < 0 || tabIndex >= $tabItems.length) {
-								return;
-							}
-
-							$tabItems.removeClass('is--active');
-							$tabContentItems.removeClass('is--active');
-
-							$tabItems.eq(tabIndex).addClass('is--active');
-							$tabContentItems
-								.eq(tabIndex)
-								.addClass('is--active');
-						}
-
-						$tabItems.on('click', function () {
-							setTab($jQuery(this).index());
-						});
-
-						setTab(activeTabIndex);
-
-						// Handle nested tabs
-						$tab.find('.eae-tab').each(function () {
-							tabify(this);
-						});
-					}
+		portfolioItems.imagesLoaded(function () {
+			// Get gutter sizes from data attributes or fallback to defaults
+			const getGutterSize = () => {
+				const windowWidth = jQuery(window).width();
+				const $portfolio = portfolioItems.closest('.eae-portfolio');
+				if (windowWidth <= 768) {
+					return parseInt($portfolio.data('gutter-mobile') || 10); // Mobile gutter
+				} else if (windowWidth <= 1024) {
+					return parseInt($portfolio.data('gutter-tablet') || 10); // Tablet gutter
 				}
+				return parseInt($portfolio.data('gutter-desktop') || 10); // Desktop gutter
+			};
 
-				tabElements.forEach(tabify);
-			} catch (error) {}
+			// Initialize Masonry
+			const $container = portfolioItems.isotope({
+				layoutMode: 'masonry',
+				itemSelector: '.eae-portfolio__item',
+				resize: true,
+				percentPosition: true,
+				masonry: {
+					columnWidth: '.eae-grid-sizer',
+					gutter: getGutterSize(),
+				},
+			});
+
+			// Update layout and gutter on window resize
+			const resizeHandler = function () {
+				$container.isotope('option', {
+					masonry: {
+						gutter: getGutterSize(),
+					},
+				});
+				$container.isotope('layout');
+			};
+
+			jQuery(window).on('resize', resizeHandler);
+
+			// Cleanup function
+			return function () {
+				jQuery(window).off('resize', resizeHandler);
+				$container.isotope('destroy');
+			};
 		});
-	};
+	} catch (error) {}
+}
 
-	// Initialize on Elementor frontend
-	$(window).on('elementor/frontend/init', () => {
-		if (typeof elementorFrontend !== 'undefined') {
-			elementorFrontend.hooks.addAction(
-				'frontend/element_ready/eae-tabs.default',
-				initTabs
-			);
+jQuery(document).ready(function ($) {
+	// Initialize when Elementor widget is ready
+	if (typeof window.elementorFrontend !== 'undefined') {
+		window.elementorFrontend.hooks.addAction(
+			'frontend/element_ready/widget',
+			startElemenfolio
+		);
+	}
+
+	// Fallback interval for preview mode
+	const previewCheckInterval = setInterval(function () {
+		const iframe = $('#elementor-preview-iframe');
+		if (
+			iframe.length &&
+			iframe
+				.contents()
+				.find(
+					'.eae-portfolio[data-layout="masonry"] .eae-portfolio__content'
+				).length
+		) {
+			startElemenfolio();
 		}
+	}, 1000);
+
+	// Cleanup when leaving the page
+	$(window).on('unload', function () {
+		clearInterval(previewCheckInterval);
 	});
-})(jQuery);
+});

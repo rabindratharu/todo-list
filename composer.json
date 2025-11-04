@@ -6,7 +6,7 @@
 		"wordpress",
 		"plugin"
 	],
-	"license": "GPLv3 or later",
+	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Rabindra Tharu",

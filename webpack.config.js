@@ -13,19 +13,43 @@ const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
 
 // Directory paths
+const SRC_DIR = path.resolve(__dirname, "assets/src");
 const JS_DIR = path.resolve(__dirname, "assets/src/js");
 const IMG_DIR = path.resolve(__dirname, "assets/src/images");
 const BUILD_DIR = path.resolve(__dirname, "assets/build");
 
 const entry = {
-  editor: path.join(JS_DIR, "editor.js"),
-  main: path.join(JS_DIR, "main.js"),
+  editor: [path.join(SRC_DIR, 'js/editor.js')],
+  main: [path.join(SRC_DIR, 'js/main.js')],
 };
 
 const output = {
   path: BUILD_DIR,
   filename: 'js/[name].js',
 };
+
+// Plugin: remove any `*.asset.php` files that don't have a corresponding JS file.
+// For example, if `main.asset.php` is generated but `js/main.js` doesn't exist,
+// this plugin will delete `main.asset.php` so it isn't written to disk.
+class RemoveAssetPhpWithoutJsPlugin {
+  apply(compiler) {
+    compiler.hooks.emit.tap('RemoveAssetPhpWithoutJsPlugin', (compilation) => {
+      Object.keys(compilation.assets).forEach((assetName) => {
+        if (!assetName.endsWith('.asset.php')) {
+          return;
+        }
+
+        // corresponding JS file path (e.g. js/main.js)
+        const jsPath = assetName.replace(/\.asset\.php$/, '.js');
+
+        if (!Object.prototype.hasOwnProperty.call(compilation.assets, jsPath)) {
+          // remove the .asset.php since no matching js file was emitted
+          delete compilation.assets[assetName];
+        }
+      });
+    });
+  }
+}
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -73,10 +97,27 @@ module.exports = (env, argv) => {
       // Remove default CSS-related plugins and optimizations
       ...defaultConfig.plugins.filter((plugin) => {
         const pluginName = plugin.constructor.name;
-        return (
-          pluginName !== "MiniCssExtractPlugin" &&
-          pluginName !== "RtlCssPlugin"
-        );
+          // Filter out DependencyExtractionWebpackPlugin for entries that only have SCSS
+          if (pluginName === 'DependencyExtractionWebpackPlugin') {
+            // Create a new plugin instance only for entries with JS files
+            const jsEntries = Object.entries(entry)
+              .filter(([, paths]) => 
+                paths.some((filePath) => filePath.endsWith('.js'))
+              )
+              .reduce(
+                (acc, [key, value]) => ({ ...acc, [key]: value }),
+                {}
+              );
+          
+            if (Object.keys(jsEntries).length === 0) {
+              return false;
+            }
+          }
+        
+          return (
+            pluginName !== 'MiniCssExtractPlugin' &&
+            pluginName !== 'RtlCssPlugin'
+          );
       }),
 
       // Custom CSS extraction
@@ -94,6 +135,9 @@ module.exports = (env, argv) => {
         stage: RemoveEmptyScriptsPlugin.STAGE_AFTER_PROCESS_PLUGINS,
       }),
 
+      // Remove any .asset.php that don't have a matching js file (e.g. for SCSS-only entries)
+      new RemoveAssetPhpWithoutJsPlugin(),
+
       // Copy static assets
       new CopyPlugin({
         patterns: [
@@ -108,14 +152,6 @@ module.exports = (env, argv) => {
     externals: {
       ...defaultConfig.externals,
       jquery: "jQuery",
-    },
-    resolve: {
-      ...defaultConfig.resolve,
-      alias: {
-        ...defaultConfig.resolve.alias,
-        "@": JS_DIR,
-        "@images": IMG_DIR,
-      },
     },
     // Disable content hashing and configure optimization conditionally
     optimization: {
