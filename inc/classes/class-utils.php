@@ -21,6 +21,7 @@ defined( 'WPINC' ) || die;
  */
 class Utils {
 
+
 	use Singleton;
 
 	/**

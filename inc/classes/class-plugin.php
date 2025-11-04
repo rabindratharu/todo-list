@@ -19,6 +19,7 @@ defined( 'WPINC' ) || die;
  */
 final class Plugin {
 
+
 	use Singleton;
 
 	/**

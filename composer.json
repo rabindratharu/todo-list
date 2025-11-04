@@ -1,58 +1,96 @@
 {
-	"name": "imransayed/todo-list",
-	"description": "Aquila Features WordPress Plugin",
+	"name": "rabindra/todo-list",
 	"type": "wordpress-plugin",
-	"license": "GPL-2.0-or-later",
-	"version": "1.0.0",
+	"description": "Todo List WordPress Plugin",
 	"keywords": [
 		"wordpress",
-		"plugin",
-		"aquila",
-		"features"
+		"plugin"
+	],
+	"license": "GPLv3 or later",
+	"authors": [
+		{
+			"name": "Rabindra Tharu",
+			"email": "rabindra.tharu.np@gmail.com",
+			"homepage": "https://github.com/rabindratharu/",
+			"role": "Developer"
+		}
 	],
 	"require": {
-		"php": ">=7.4",
-		"ext-json": "*"
+		"php": ">=7.2",
+		"ext-filter": "*",
+		"ext-libxml": "*",
+		"ext-tokenizer": "*",
+		"ext-xmlreader": "*",
+		"squizlabs/php_codesniffer": "^3.13.0",
+		"phpcsstandards/phpcsutils": "^1.1.0",
+		"phpcsstandards/phpcsextra": "^1.4.0",
+		"wp-coding-standards/wpcs": "^3.0.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0.0"
 	},
 	"require-dev": {
-        "wp-coding-standards/wpcs": "^3.0",
-        "phpcompatibility/phpcompatibility-wp": "^2.1",
-        "squizlabs/php_codesniffer": "^3.7",
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
-    },
+		"phpcompatibility/php-compatibility": "^9.0",
+		"phpunit/phpunit": "^8.0 || ^9.0",
+		"phpcsstandards/phpcsdevtools": "^1.2.0",
+		"php-parallel-lint/php-parallel-lint": "^1.4.0",
+		"php-parallel-lint/php-console-highlighter": "^1.0.0"
+	},
+	"suggest": {
+		"ext-iconv": "For improved results",
+		"ext-mbstring": "For improved results"
+	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		},
-		"optimize-autoloader": true,
-		"sort-packages": true,
-		"platform-check": false
+		"lock": false
 	},
-	"authors": [
-		{
-			"name": "Imran Sayed",
-			"email": "codeytek.academy@gmail.com",
-			"homepage": "https://github.com/imranhsayed",
-			"role": "Developer"
-		}
-	],
 	"autoload-dev": {
 		"psr-4": {
-			"AquilaFeatures\\Tests\\": "tests/"
+			"Todo_List\\Tests\\": "tests/"
 		}
 	},
 	"scripts": {
-		"phpcs": "phpcs",
-		"phpcbf": "phpcbf",
-		"check-cs": "phpcs --standard=phpcs.xml.dist",
-		"fix-cs": "phpcbf --standard=phpcs.xml.dist",
-		"test": "echo 'No tests configured yet'"
+		"lint": [
+			"@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --show-deprecated --exclude vendor --exclude .git"
+		],
+		"check-cs": [
+			"@php ./vendor/squizlabs/php_codesniffer/bin/phpcs"
+		],
+		"fix-cs": [
+			"@php ./vendor/squizlabs/php_codesniffer/bin/phpcbf"
+		],
+		"run-tests": [
+			"@php ./vendor/phpunit/phpunit/phpunit --filter WordPress ./vendor/squizlabs/php_codesniffer/tests/AllTests.php --no-coverage"
+		],
+		"coverage": [
+			"@php ./vendor/phpunit/phpunit/phpunit --filter WordPress ./vendor/squizlabs/php_codesniffer/tests/AllTests.php"
+		],
+		"check-complete": [
+			"@php ./vendor/phpcsstandards/phpcsdevtools/bin/phpcs-check-feature-completeness -q ./WordPress"
+		],
+		"check-complete-strict": [
+			"@php ./vendor/phpcsstandards/phpcsdevtools/bin/phpcs-check-feature-completeness ./WordPress"
+		],
+		"check-all": [
+			"@lint",
+			"@check-cs",
+			"@run-tests",
+			"@check-complete-strict"
+		]
 	},
-	"minimum-stability": "stable",
-	"prefer-stable": true,
+	"scripts-descriptions": {
+		"lint": "Lint PHP files against parse errors.",
+		"check-cs": "Run the PHPCS script against the entire codebase.",
+		"fix-cs": "Run the PHPCBF script to fix all the autofixable violations on the codebase.",
+		"run-tests": "Run all the unit tests for the WordPress Coding Standards sniffs without code coverage.",
+		"coverage": "Run all the unit tests for the WordPress Coding Standards sniffs with code coverage.",
+		"check-complete": "Check if all the sniffs have tests.",
+		"check-complete-strict": "Check if all the sniffs have unit tests and XML documentation.",
+		"check-all": "Run all checks (lint, phpcs, feature completeness) and tests."
+	},
 	"support": {
-		"issues": "https://github.com/imranhsayed/todo-list/issues",
-		"source": "https://github.com/imranhsayed/todo-list",
-		"docs": "https://github.com/imranhsayed/todo-list#readme"
+		"issues": "https://github.com/rabindratharu/todo-list/issues",
+		"source": "https://github.com/rabindratharu/todo-list",
+		"docs": "https://github.com/rabindratharu/todo-list#readme"
 	}
 }

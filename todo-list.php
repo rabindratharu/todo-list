@@ -40,9 +40,9 @@ use Todo_List\Inc\Plugin;
 // Check if the class exists and WordPress environment is valid.
 if ( class_exists( 'Todo_List\Inc\Plugin' ) ) {
 	// Instantiate the plugin.
-	$the_plugin = Plugin::get_instance();
+	$todo_list_plugin = Plugin::get_instance();
 
 	// Register activation and deactivation hooks.
-	register_activation_hook( __FILE__, array( $the_plugin, 'activate' ) );
-	register_deactivation_hook( __FILE__, array( $the_plugin, 'deactivate' ) );
+	register_activation_hook( __FILE__, array( $todo_list_plugin, 'activate' ) );
+	register_deactivation_hook( __FILE__, array( $todo_list_plugin, 'deactivate' ) );
 }
