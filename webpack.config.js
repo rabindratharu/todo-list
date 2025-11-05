@@ -18,8 +18,10 @@ const BUILD_DIR = path.resolve(__dirname, "assets/build");
 
 const entry = {
   editor: [path.join(SRC_DIR, 'js/editor.js')],
-  main: [path.join(SRC_DIR, 'js/main.js')],
+  main: [path.join(SRC_DIR, 'sass/main.scss')],
   widget: [path.join(SRC_DIR, 'js/widget.js')],
+  admin: [path.join(SRC_DIR, 'js/admin.js')],
+  icon: [path.join(SRC_DIR, 'sass/icon.scss')],
 };
 
 const output = {
@@ -96,27 +98,27 @@ module.exports = (env, argv) => {
       // Remove default CSS-related plugins and optimizations
       ...defaultConfig.plugins.filter((plugin) => {
         const pluginName = plugin.constructor.name;
-          // Filter out DependencyExtractionWebpackPlugin for entries that only have SCSS
-          if (pluginName === 'DependencyExtractionWebpackPlugin') {
-            // Create a new plugin instance only for entries with JS files
-            const jsEntries = Object.entries(entry)
-              .filter(([, paths]) => 
-                paths.some((filePath) => filePath.endsWith('.js'))
-              )
-              .reduce(
-                (acc, [key, value]) => ({ ...acc, [key]: value }),
-                {}
-              );
-          
-            if (Object.keys(jsEntries).length === 0) {
-              return false;
-            }
+        // Filter out DependencyExtractionWebpackPlugin for entries that only have SCSS
+        if (pluginName === 'DependencyExtractionWebpackPlugin') {
+          // Create a new plugin instance only for entries with JS files
+          const jsEntries = Object.entries(entry)
+            .filter(([, paths]) =>
+              paths.some((filePath) => filePath.endsWith('.js'))
+            )
+            .reduce(
+              (acc, [key, value]) => ({ ...acc, [key]: value }),
+              {}
+            );
+
+          if (Object.keys(jsEntries).length === 0) {
+            return false;
           }
-        
-          return (
-            pluginName !== 'MiniCssExtractPlugin' &&
-            pluginName !== 'RtlCssPlugin'
-          );
+        }
+
+        return (
+          pluginName !== 'MiniCssExtractPlugin' &&
+          pluginName !== 'RtlCssPlugin'
+        );
       }),
 
       // Custom CSS extraction
@@ -141,15 +143,20 @@ module.exports = (env, argv) => {
       new CopyPlugin({
         patterns: [
           {
-            from: "assets/src/library",
-            to: "library",
+            from: SRC_DIR + '/library',
+            to: BUILD_DIR + '/library',
             noErrorOnMissing: true,
           },
           {
             from: SRC_DIR + '/images',
             to: BUILD_DIR + '/images',
             noErrorOnMissing: true,
-        },
+          },
+          {
+            from: SRC_DIR + '/fonts',
+            to: BUILD_DIR + '/fonts',
+            noErrorOnMissing: true,
+          },
         ],
       }),
     ],
