@@ -1,4 +1,3 @@
-import Typed from 'typed.js';
 (function ($) {
 	'use strict';
 
