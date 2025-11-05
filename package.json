@@ -22,9 +22,7 @@
 		"lint:css:fix": "wp-scripts lint-style 'assets/src/sass/**/*.scss' 'assets/src/css/**/*.css' --fix",
 		"lint:pkg": "wp-scripts lint-pkg-json",
 		"format:js": "wp-scripts format assets/src/js",
-		"check-engines": "wp-scripts check-engines",
 		"packages-update": "wp-scripts packages-update",
-		"precommit": "npm run lint:php && npm run lint:css:fix && npm run lint:js:fix && npm run build",
 		"cypress:open": "node_modules/.bin/cypress open",
 		"translate": "wp i18n make-pot ./ languages/todo-list.pot --exclude=builds/,node_modules/,cypress/,vendor --ignore-domain --allow-root",
 		"release": "npm run build && npm run translate && grunt build"

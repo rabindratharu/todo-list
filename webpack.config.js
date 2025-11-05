@@ -14,13 +14,12 @@ const path = require("path");
 
 // Directory paths
 const SRC_DIR = path.resolve(__dirname, "assets/src");
-const JS_DIR = path.resolve(__dirname, "assets/src/js");
-const IMG_DIR = path.resolve(__dirname, "assets/src/images");
 const BUILD_DIR = path.resolve(__dirname, "assets/build");
 
 const entry = {
   editor: [path.join(SRC_DIR, 'js/editor.js')],
   main: [path.join(SRC_DIR, 'js/main.js')],
+  widget: [path.join(SRC_DIR, 'js/widget.js')],
 };
 
 const output = {
@@ -146,6 +145,11 @@ module.exports = (env, argv) => {
             to: "library",
             noErrorOnMissing: true,
           },
+          {
+            from: SRC_DIR + '/images',
+            to: BUILD_DIR + '/images',
+            noErrorOnMissing: true,
+        },
         ],
       }),
     ],

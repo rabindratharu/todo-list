@@ -82,19 +82,19 @@ function startElemenfolio() {
       return;
     }
     portfolioItems.imagesLoaded(function () {
-      // Get gutter sizes from data attributes or fallback to defaults
+      // Get gutter sizes from data attributes or fallback to defaults.
       const getGutterSize = () => {
         const windowWidth = jQuery(window).width();
         const $portfolio = portfolioItems.closest('.eae-portfolio');
         if (windowWidth <= 768) {
-          return parseInt($portfolio.data('gutter-mobile') || 10); // Mobile gutter
+          return parseInt($portfolio.data('gutter-mobile') || 10); // Mobile gutter.
         } else if (windowWidth <= 1024) {
-          return parseInt($portfolio.data('gutter-tablet') || 10); // Tablet gutter
+          return parseInt($portfolio.data('gutter-tablet') || 10); // Tablet gutter.
         }
-        return parseInt($portfolio.data('gutter-desktop') || 10); // Desktop gutter
+        return parseInt($portfolio.data('gutter-desktop') || 10); // Desktop gutter.
       };
 
-      // Initialize Masonry
+      // Initialize Masonry.
       const $container = portfolioItems.isotope({
         layoutMode: 'masonry',
         itemSelector: '.eae-portfolio__item',
@@ -106,7 +106,7 @@ function startElemenfolio() {
         }
       });
 
-      // Update layout and gutter on window resize
+      // Update layout and gutter on window resize.
       const resizeHandler = function () {
         $container.isotope('option', {
           masonry: {
@@ -117,7 +117,7 @@ function startElemenfolio() {
       };
       jQuery(window).on('resize', resizeHandler);
 
-      // Cleanup function
+      // Cleanup function.
       return function () {
         jQuery(window).off('resize', resizeHandler);
         $container.isotope('destroy');
@@ -126,12 +126,12 @@ function startElemenfolio() {
   } catch (error) {}
 }
 jQuery(document).ready(function ($) {
-  // Initialize when Elementor widget is ready
+  // Initialize when Elementor widget is ready.
   if (typeof window.elementorFrontend !== 'undefined') {
     window.elementorFrontend.hooks.addAction('frontend/element_ready/widget', startElemenfolio);
   }
 
-  // Fallback interval for preview mode
+  // Fallback interval for preview mode.
   const previewCheckInterval = setInterval(function () {
     const iframe = $('#elementor-preview-iframe');
     if (iframe.length && iframe.contents().find('.eae-portfolio[data-layout="masonry"] .eae-portfolio__content').length) {
@@ -139,7 +139,7 @@ jQuery(document).ready(function ($) {
     }
   }, 1000);
 
-  // Cleanup when leaving the page
+  // Cleanup when leaving the page.
   $(window).on('unload', function () {
     clearInterval(previewCheckInterval);
   });
