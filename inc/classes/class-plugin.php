@@ -49,7 +49,13 @@ final class Plugin {
 		}
 
 		// Load class.
+		Assets::get_instance();
 		Utils::get_instance();
+		Integration::get_instance();
+		Rest_Endpoint::get_instance();
+		if ( is_admin() ) {
+			Dashboard::get_instance();
+		}
 	}
 
 	/**

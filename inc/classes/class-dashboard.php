@@ -175,7 +175,7 @@ class Dashboard {
 	public function register_admin_assets(): void {
 		$suffix = is_rtl() ? '-rtl' : '';
 		// Enqueue icon font.
-		wp_enqueue_style( 'todo-list-icons', TODO_LIST_BUILD_PATH_URL . "font-icons/index{$suffix}.css", array(), filemtime( TODO_LIST_BUILD_PATH . "/font-icons/index{$suffix}.css" ), 'all' );
+		wp_enqueue_style( 'todo-list-icons', TODO_LIST_BUILD_PATH_URL . "css/icon{$suffix}.css", array(), filemtime( TODO_LIST_BUILD_PATH . "/css/icon{$suffix}.css" ), 'all' );
 
 		$custom_css = "
         #toplevel_page_todo-list .wp-menu-image:before {
@@ -197,12 +197,12 @@ class Dashboard {
 			return;
 		}
 		// Register styles.
-		wp_register_style( 'todo-list-admin', TODO_LIST_BUILD_PATH_URL . "admin/index{$suffix}.css", array( 'wp-components' ), filemtime( TODO_LIST_BUILD_PATH . "/admin/index{$suffix}.css" ), 'all' );
+		wp_register_style( 'todo-list-admin', TODO_LIST_BUILD_PATH_URL . "css/admin{$suffix}.css", array( 'wp-components' ), filemtime( TODO_LIST_BUILD_PATH . "/css/admin{$suffix}.css" ), 'all' );
 
 		// Enqueue Styles.
 		wp_enqueue_style( 'todo-list-admin' );
 
-		$asset_config_file = sprintf( '%s/admin/index.asset.php', TODO_LIST_BUILD_PATH );
+		$asset_config_file = sprintf( '%s/js/admin.asset.php', TODO_LIST_BUILD_PATH );
 		if ( ! file_exists( $asset_config_file ) ) {
 			return;
 		}
@@ -214,7 +214,7 @@ class Dashboard {
 		// Register scripts.
 		wp_register_script(
 			'todo-list-admin',
-			TODO_LIST_BUILD_PATH_URL . 'admin/index.js',
+			TODO_LIST_BUILD_PATH_URL . 'js/admin.js',
 			$js_dependencies,
 			$version,
 			true
